@@ -27,6 +27,17 @@ const App = () => {
       active: f.active.checked // ya que es cb
     }
 
+    fetch("http://localhost:3050/leads", {
+      method: "POST",
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(respuesta => respuesta.json)
+      .then(respuesta => console.log(respuesta))
+      .catch(error => console.log(error))
+
     console.log(data)
   }
 
