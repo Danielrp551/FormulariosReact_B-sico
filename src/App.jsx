@@ -36,8 +36,8 @@ const App = () => {
       active: f.active.checked // ya que es cb
     }
 
-    fetch("http://localhost:3050/leads", {
-      method: "POST",
+    fetch("http://localhost:3050/leads/c89f", {
+      method: "PUT",
       headers: {
         "Content-Type" : "application/json"
       },
