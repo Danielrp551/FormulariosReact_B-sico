@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import "./App.scss"
 import Form from './components/Form'
@@ -13,6 +13,15 @@ import Select from './components/Select'
 const App = () => {
 
   const form = useRef()
+
+  const [user, setUser] = useState({})
+
+  useEffect(() => {
+    fetch("http://localhost:3050/leads/c89f")
+    .then(respuesta => respuesta.json())
+    .then(data => setUser(data))
+    .catch(error => console.log(error))
+  }, []) // se ejecutará solo una vez
 
   const submit = (e) => {
     e.preventDefault()
@@ -35,7 +44,11 @@ const App = () => {
       body: JSON.stringify(data)
     })
       .then(respuesta => respuesta.json)
-      .then(respuesta => console.log(respuesta))
+      .then(respuesta => {
+        console.log(respuesta)
+        f.reset()
+        alert("Los datos fueron guardados")
+      })
       .catch(error => console.log(error))
 
     console.log(data)
@@ -47,35 +60,35 @@ const App = () => {
         type="text"
         name="fullname"
         label="Nombres"
-        defaultValue=""
+        defaultValue={user.fullname}
       />
       <Input
         type="email"
         name="correo"
         label="Correo electrónico"
-        defaultValue=""
+        defaultValue={user.correo}
       />
       <Input
         type="number"
         name="age"
         label="Edad"
-        defaultValue=""
+        defaultValue={user.age}
       />
       <Input
         type="range"
         name="ranking"
         label="Calificación"
-        defaultValue=""
+        defaultValue={user.ranking}
       />            
       <Textarea
         name="obs"
         label="Observaciones"
-        defaultValue=""
+        defaultValue={user.obs}
       />
-      <Select label="País" name="country" options={
+      <Select label="País" name="country" defaultValue={user.country} options={
         [{val: "PE", content:"Perú"},{val: "CO", content:"Colombia"},{val:"BO", content:"Bolivia"}]
       }/>
-      <Input type="checkbox" name="active" checked label="¿Activo?"/>
+      <Input type="checkbox" name="active" checked label="¿Activo?" defaultValue={user.active}/>
       <Submit value="Guardar" />
     </Form>    
   )

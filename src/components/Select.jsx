@@ -1,12 +1,12 @@
 
 
-const Select = ( {value="", label, name, options=[]} ) => {
+const Select = ( {defaultValue="", label, name, options=[]} ) => {
 
     return (
         <div className="ed-item form__item">
             <label htmlFor={name}>
                 {label}
-                <select defaultValue={value} name={name}>
+                <select defaultValue={defaultValue} name={name}>
                     <option value="">-Seleccionar-</option>
                     {
                         options.map(({val, content}) => (
